@@ -4,12 +4,7 @@
 name: Build CI
 
 on:
-  push:
-    branches: [master, fix-*, feat-*]
-    tags: [v*]
-  pull_request:
-    types: [opened]
-    branches: [master]
+  workflow_dispatch:
 
 jobs:
   build:
