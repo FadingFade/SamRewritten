@@ -4,18 +4,13 @@
 name: Build CI
 
 on:
-  push:
-    branches: [master, fix-*, feat-*]
-    tags: [v*]
-  pull_request:
-    types: [opened]
-    branches: [master]
+  workflow_dispatch:
 
 jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-latest]
         cc: [gcc]
     runs-on: ${{ matrix.os }}
     env:
@@ -26,7 +21,6 @@ jobs:
     - uses: actions/checkout@v3
     - run: make
     - run: sudo make install
-    - run: make clean
     - run: which samrewritten
     - run: cd package && ./build_appimage.sh
     - name: Upload artifact
