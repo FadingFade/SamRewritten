@@ -18,13 +18,17 @@ jobs:
     steps:
     - run: sudo apt-get update -y
     - run: sudo apt-get install -y libgtkmm-3.0-dev libcurl4-gnutls-dev libyajl-dev valgrind
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: make
     - run: sudo make install
     - run: which samrewritten
     - run: cd package && ./build_appimage.sh
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: marvinpinto/action-automatic-releases@latest
       with:
-        name: SamRewritten
-        path: package/Sam*.AppImage 
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        title: SamRewritten
+        automatic_release_tag: continuous
+        prerelease: false
+        files: |
+          package/Sam*.AppImage
